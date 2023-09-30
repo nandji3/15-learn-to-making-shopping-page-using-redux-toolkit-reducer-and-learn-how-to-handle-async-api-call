@@ -4,7 +4,7 @@ import classes from './MainHeader.module.css';
 const MainHeader = (props) => {
   return (
     <header className={classes.header}>
-      <h1>ReduxCart</h1>
+      <h1>ReduxToolkitCart</h1>
       <nav>
         <ul>
           <li>
@@ -15,5 +15,4 @@ const MainHeader = (props) => {
     </header>
   );
 };
-
 export default MainHeader;
