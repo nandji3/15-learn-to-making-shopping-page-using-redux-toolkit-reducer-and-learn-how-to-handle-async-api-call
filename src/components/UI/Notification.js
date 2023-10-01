@@ -2,7 +2,7 @@ import classes from './Notification.module.css';
 
 const Notification = (props) => {
 
-  console.log("Props data", props)
+  // console.log("Props data", props)
   let specialClasses = '';
 
   if (props.status === 'pending') {

@@ -13,7 +13,7 @@ const uiSlice = createSlice({
             state.cartIsVisible = !state.cartIsVisible;
         },
         showNotification(state, actions) {
-            console.log("Inside Redux Action -->", actions.payload);
+            // console.log("Inside Redux Action -->", actions.payload);
             state.notification = {
                 status: actions.payload.status,
                 title: actions.payload.title,

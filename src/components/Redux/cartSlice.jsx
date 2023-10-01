@@ -1,15 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialCartState = {
-    cartItems: [],
-    totalQuantity: 0,
-    totalAmount: 0,
-};
-
 const cartSlice = createSlice({
     name: "cartSlice",
-    initialState: initialCartState,
+    initialState: {
+        cartItems: [],
+        totalQuantity: 0,
+    },
     reducers: {
+        replaceCart(state, actions) {
+            state.cartItems = actions.payload.cartItems;
+            state.totalQuantity = actions.payload.totalQuantity;
+        },
         addItemToCartAction(state, actions) {
             const newItem = actions.payload;
             const existingItem = state.cartItems.find(
@@ -48,6 +49,8 @@ const cartSlice = createSlice({
     },
 });
 
-export const { addItemToCartAction, removeItemFromCartAction } =
+export const { replaceCart, addItemToCartAction, removeItemFromCartAction } =
     cartSlice.actions;
 export default cartSlice.reducer;
+
+//action creator does not return action object but instead returns another function it will receive dispatch function as a argument
