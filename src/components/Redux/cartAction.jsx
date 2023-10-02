@@ -1,4 +1,4 @@
-import { replaceCart } from "./cartSlice";
+import { replaceCartAction } from "./cartSlice";
 import { showNotification } from "./uiSlice";
 
 export const getCartDataFromBackend = () => {
@@ -15,9 +15,14 @@ export const getCartDataFromBackend = () => {
         };
 
         try {
-            const getCartState = await fetchData();
-            console.log("Inside getCartDataFromBackend -->", getCartState);
-            dispatch(replaceCart(getCartState));
+            const getCartData = await fetchData();
+            // console.log("Inside getCartDataFromBackend -->", getCartState);
+            dispatch(
+                replaceCartAction({
+                    cartItems: getCartData.cartItems || [],
+                    totalQuantity: getCartData.totalQuantity,
+                })
+            );
             dispatch(
                 showNotification({
                     status: "success",
@@ -38,7 +43,7 @@ export const getCartDataFromBackend = () => {
 };
 
 //sendCartData --> Action Creator -- which create action object automatically
-export const sendCartData = (cartState) => {
+export const sendCartData = (cart) => {
     return async (dispatch) => {
         dispatch(
             showNotification({
@@ -53,17 +58,21 @@ export const sendCartData = (cartState) => {
                 "https://reduxtoolkitcart-c3fbf-default-rtdb.firebaseio.com/cart.json",
                 {
                     method: "PUT",
-                    body: JSON.stringify(cartState),
+                    body: JSON.stringify({
+                        cartItems: cart.cartItems,
+                        totalQuantity: cart.totalQuantity,
+                    }),
                 }
             );
+
             if (!response.ok) {
                 throw new Error("Sending cart data failed.");
             }
         };
 
-        // console.log("Inside App Component useEffect() to check response -->", response.ok)
         try {
             await sendRequest();
+
             dispatch(
                 showNotification({
                     status: "success",

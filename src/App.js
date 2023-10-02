@@ -12,10 +12,12 @@ let isInitial = true;
 function App() {
 
   const dispatch = useDispatch();
-  const { cartIsVisible, notification } = useSelector(state => state.ui)
-  const cartState = useSelector(state => state.cart)
 
-  // console.log("Inside App Component Notification -->", notification);
+  const { cartIsVisible, notification } = useSelector(state => state.ui)
+
+  const cart = useSelector(state => state.cart)
+
+  // console.log("Inside App Component -->", cart);
 
   useEffect(() => {
     dispatch(getCartDataFromBackend())
@@ -26,8 +28,10 @@ function App() {
       isInitial = false;
       return;
     }
-    dispatch(sendCartData(cartState))
-  }, [cartState, dispatch]);
+    if (cart.changed) {
+      dispatch(sendCartData(cart));
+    }
+  }, [cart, dispatch]);
 
 
   return (

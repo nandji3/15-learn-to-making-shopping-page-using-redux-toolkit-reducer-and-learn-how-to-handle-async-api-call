@@ -4,7 +4,8 @@ import classes from './Cart.module.css';
 import CartItem from './CartItem';
 
 const Cart = () => {
-  const { cartItems } = useSelector(state => state.cart)
+  const { cartItems } = useSelector((state) => state.cart);
+
   return (
     <Card className={classes.cart}>
       <h2>Your Shopping Cart</h2>
